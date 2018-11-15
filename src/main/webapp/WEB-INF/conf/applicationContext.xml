@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+    <!--
+        配置一个properties，该文件中包含了要上传文件到阿里云OSS服务器时需要使用的一些参数
+        具体参数到/WEB-INF/conf/oss.properties文件中配置
+    -->
+    <util:properties id="ossSignature" location="/WEB-INF/conf/oss.properties"/>
+    <!--
+       配置发送邮件服务的bean
+    -->
+    <bean id="emailService" class="com.web.handle.service.email.EmailServiceImpl">
+        <property name="properties">
+            <util:properties location="/WEB-INF/conf/mail.properties"/>
+        </property>
+    </bean>
+    <!--
+        配置一个监听器，当spring容器初始化完成时，启动tcp服务器组件
+    -->
+    <bean class="com.web.listener.InitTCPListernr"/>
+    <!--配置数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="root"/>
+        <property name="password" value="Pebi2018/.,"/>
+        <!--<property name="password" value="Xhc930319"/>-->
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/wifisocket?useSSL=false"/>
+        <property name="initialPoolSize" value="7"/>
+        <property name="maxIdleTime" value="30"/>
+        <property name="maxPoolSize" value="10"/>
+        <property name="minPoolSize" value="5"/>
+        <property name="maxStatements" value="50"/>
+        <property name="maxStatementsPerConnection" value="5"/>
+    </bean>
+    <!--配置数据库操作的工具类-->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--配置数据模型的操作类-->
+    <bean id="userDAO" class="com.dao.impl.UserDAOJdbcTemplate" p:jdbcTemplate-ref="jdbcTemplate"/>
+    <bean id="adminDAO" class="com.dao.impl.AdminDAOJdbcTemplate" p:jdbcTemplate-ref="jdbcTemplate"/>
+    <bean id="socketDAO" class="com.dao.impl.SocketDAOJdbcTemplate" p:jdbcTemplate-ref="jdbcTemplate"/>
+    <bean id="socketTimingDAO" class="com.dao.impl.SocketTimingDAOJdbcTemplate" p:jdbcTemplate-ref="jdbcTemplate"/>
+   <!--
+        以下进行TCP服务器的配置
+   -->
+    <bean id="clientCollection" class="com.tcp.collection.ClientCollection"/>
+    <!--配置一个数据解析类，该数据解析器实现了ParseData接口-->
+    <bean id="parseData" class="com.tcp.utils.ParseDateImpl"/>
+    <!--配置客户端类，该类实现了AbstractClient父类-->
+    <bean id="socketClient" class="com.tcp.client.SocketClient"
+          p:socketDAO-ref="socketDAO"
+          p:socketTimingDAO-ref="socketTimingDAO"
+          p:sendDataTimeOut="0"
+          scope="prototype"/>
+    <!--配置服务器主类-->
+    <bean id="tcpServer" class="com.tcp.server.TcpServer">
+        <constructor-arg name="PORT" value="20188"/>
+        <property name="clientCollection" ref="clientCollection"/>
+        <property name="parseData" ref="parseData"/>
+        <property name="clientMap">
+            <map>
+                <!--这里的value要和客户端类的ID名相同-->
+                <entry key="1" value="socketClient" />
+            </map>
+        </property>
+    </bean>
+    <!--配置发送心跳包的线程类-->
+    <bean id="sendHeartPackage" class="com.tcp.support.SendHeartPackage"
+          p:collection-ref="clientCollection"
+          p:timeOut="20000" init-method="init"/>
+    <!--配置检测客户端是否掉线的线程-->
+    <bean id="clearClosedClient" class="com.tcp.support.ClearClosedClient"
+          p:collection-ref="clientCollection"
+          p:outTime="60000" init-method="init"/>
+    <!--配置检测智能插座定时的线程-->
+    <bean id="socketTiming" class="com.tcp.support.SocketTimingThread"
+          p:collection-ref="clientCollection"
+          p:socketTimingDAO-ref="socketTimingDAO"
+          init-method="init"/>
+    <bean id="flashSocketTimingThread" class="com.tcp.support.FlashSocketTimingThread"
+          p:collection-ref="clientCollection" init-method="init"/>
+</beans>

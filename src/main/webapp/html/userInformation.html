@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>信息管理</title>
+    <script type="text/javascript" src="/js/jquery-2.2.4.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: #f2f2f2;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        a:hover{
+            color: blue;
+        }
+        a:active{
+            color: orangered;
+        }
+        #head{
+            height: 140px;
+            min-width: 800px;
+            background-color: #f2f2f2;
+            position: relative;
+        }
+        #logo{
+            width: 60px;
+            height: 60px;
+            border-radius: 60px;
+            position: absolute;
+            top: 10px;
+            left: 100px;
+        }
+        #head>h1{
+            height: 60px;
+            line-height: 60px;
+            font-size: 40px;
+            font-family: 隶书;
+            position: absolute;
+            top: 10px;
+            left: 170px;
+        }
+        #userDiv{
+            width: 100%;
+            height: 40px;
+            position: absolute;
+            top: 90px;
+            background-color: white;
+        }
+        #userDiv>img{
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 10px;
+            right: 150px;
+        }
+        #userDiv>a{
+            display: block;
+            width: 150px;
+            height: 40px;
+            line-height: 40px;
+            text-indent: 10px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        #side{
+            width: 180px;
+            margin-left: 100px;
+            margin-top: 20px;
+            float: left;
+        }
+        #side tr>td:first-child{
+            width:50px;
+        }
+        #side tr>td:last-child{
+            width: 130px;
+        }
+        #side td{
+            height: 40px;
+        }
+        #side img{
+            width: 30px;
+            height: 30px;
+        }
+        .title1 span,.title1 a{
+            font-size: 20px;
+        }
+        .link td{
+            height: 30px;
+        }
+        #content{
+            float: left;
+            width: calc(100% - 330px);
+            height: 600px;
+            margin-top: 20px;
+            margin-left: 50px;
+            background-color: #ffffff;
+        }
+        #content table{
+            width:calc(100% - 200px);
+        }
+        #content caption{
+            text-align: left;
+            text-indent: 20px;
+            font-size: 36px;
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+        #content td{
+            border-bottom: 1px solid #f2f2f2;
+            height: 50px;
+            line-height: 50px;
+        }
+        #content tr>td:first-child{
+            text-indent: 20px;
+        }
+        #content tr>td:last-child{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="head">
+        <img id="logo" src="../images/logo.png">
+        <h1>智能插座</h1>
+        <div id="userDiv">
+            <img src="../images/user2.png">
+            <a href="userInformation">许和成</a>
+        </div>
+    </div>
+    <div id="side">
+        <table>
+            <tr>
+                <td><img src="../images/home.png"></td>
+                <td class="title1"><a href="/admin/jsp/index">主页</a></td>
+            </tr>
+            <tr>
+                <td><img src="../images/function.png"></td>
+                <td class="title1"><span>功能</span></td>
+            </tr>
+            <tr>
+                <td><img src="../images/user2.png"></td>
+                <td class="title1"><span>用户管理</span></td>
+            </tr>
+            <tr class="link">
+                <td></td>
+                <td><a href="#">查看用户信息</a></td>
+            </tr>
+            <tr>
+                <td><img src="../images/cz_on.png"></td>
+                <td class="title1"><span>设备管理</span></td>
+            </tr>
+            <tr class="link">
+                <td></td>
+                <td><a href="#">查看设备信息</a></td>
+            </tr>
+            <tr class="link">
+                <td></td>
+                <td><a href="#">添加设备</a></td>
+            </tr>
+            <tr>
+                <td><img src="../images/set.png"></td>
+                <td class="title1"><span>设置</span></td>
+            </tr>
+            <tr class="link">
+                <td></td>
+                <td><a href="#">个人信息</a></td>
+            </tr>
+            <tr class="link">
+                <td></td>
+                <td><a href="#">修改密码</a></td>
+            </tr>
+        </table>
+    </div>
+    <div id="content">
+        <table>
+            <colgroup style="width: 100px;" class="group1"></colgroup>
+            <colgroup class="group2"></colgroup>
+            <colgroup style="width: 50px;" class="group3"></colgroup>
+            <caption>个人信息管理</caption>
+            <tr>
+                <td>用户名</td>
+                <td>elian2018</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>姓名</td>
+                <td>许和成</td>
+                <td><a href="#">修改</a></td>
+            </tr>
+            <tr>
+                <td>性别</td>
+                <td>男</td>
+                <td><a href="#">修改</a></td>
+            </tr>
+            <tr>
+                <td>生日</td>
+                <td>1994-03-19</td>
+                <td><a href="#">修改</a></td>
+            </tr>
+            <tr>
+                <td>邮箱</td>
+                <td>82871987@qq.com</td>
+                <td><a href="#">修改</a></td>
+            </tr>
+            <tr>
+                <td>手机</td>
+                <td>18875686859</td>
+                <td><a href="#">修改</a></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

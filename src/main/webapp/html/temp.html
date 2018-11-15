@@ -1,0 +1,286 @@
+
+
+<html>
+<head>
+    <title>个人信息管理</title>
+    <script type="text/javascript" src="/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+    <style>
+        #content{
+            width: calc(100% - 330px);
+            height: 600px;
+        }
+        #content table{
+            width:calc(100% - 200px);
+        }
+        #content caption{
+            text-align: left;
+            text-indent: 20px;
+            font-size: 36px;
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+        #content td{
+            border-bottom: 1px solid #f2f2f2;
+            height: 50px;
+            line-height: 50px;
+        }
+        #content tr>td:first-child{
+            text-indent: 20px;
+        }
+        #content tr>td:last-child{
+            text-align: center;
+        }
+        .alterBtn{
+            cursor: pointer;
+        }
+        .alterBtn:hover{
+            color: #ffdb8c;
+        }
+        .alterBtn:active{
+            color: orangered;
+        }
+        .alterInformationDiv{
+            width: 600px;
+            height: 400px;
+            display: none;
+            border-radius: 5px;
+            position: fixed;
+            top: calc(50% - 350px);
+            left: calc(50% - 300px);
+            background-color: #ececec;
+            border: 1px solid rgb(229, 229, 229);
+        }
+        .alterTitle{
+            position: absolute;
+            top: 20px;
+            left:20px;
+            color: #797979;
+        }
+        .close{
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .close:hover{
+            background-color: rgb(228, 228, 228);
+        }
+        .close img{
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+        .title2{
+            display: block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 20px;
+            position: absolute;
+            top: 130px;
+            left: 120px;
+        }
+        .alterInformationDiv>form>input,.alterInformationDiv>form>select{
+            display: block;
+            width: 300px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 20px;
+            text-indent: 10px;
+            position: absolute;
+            top: 130px;
+            left: 175px;
+        }
+        .tip{
+            position: absolute;
+            top: 190px;
+            left: 175px;
+        }
+        .confirm,.cancel{
+            display: block;
+            width: 125px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 20px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            background:linear-gradient(to right, #f3f3f3, #dddddd, #f3f3f3);
+            position: absolute;
+            top:240px;
+        }
+        .confirm{
+            left: 175px;
+        }
+        .cancel{
+            left: 350px;
+        }
+        #alterEmailDiv .title2{
+            width: 100px;
+            left: 100px;
+        }
+        #alterEmailDiv input{
+            left: 200px;
+        }
+        #alterEmailDiv .confirm{
+            left: 200px;
+        }
+        #alterEmailDiv .cancel{
+            left:375px ;
+        }
+    </style>
+</head>
+<body>
+<div id="head">
+    <img id="logo" src="/images/logo.png">
+    <h1>智能插座</h1>
+    <div id="userDiv">
+        <img src="/images/user2.png">
+        <a id="adminName" href="/admin/userInformation">张三</a>
+    </div>
+</div>
+<div id="side">
+    <table>
+        <tr>
+            <td><img src="/images/home.png"></td>
+            <td class="title1"><a href="/admin/index">主页</a></td>
+        </tr>
+        <tr>
+            <td><img src="/images/function.png"></td>
+            <td class="title1"><span>功能</span></td>
+        </tr>
+        <tr>
+            <td><img src="/images/user2.png"></td>
+            <td class="title1"><span>用户管理</span></td>
+        </tr>
+        <tr class="link">
+            <td></td>
+            <td><a href="/admin/selectUsersInformation">查看用户信息</a></td>
+        </tr>
+        <tr>
+            <td><img src="/images/cz_on.png"></td>
+            <td class="title1"><span>设备管理</span></td>
+        </tr>
+        <tr class="link">
+            <td></td>
+            <td><a href="/admin/selectSocketsInformation">查看设备信息</a></td>
+        </tr>
+        <tr class="link">
+            <td></td>
+            <td><a href="/admin/addSockets">添加设备</a></td>
+        </tr>
+        <tr>
+            <td><img src="/images/set.png"></td>
+            <td class="title1"><span>设置</span></td>
+        </tr>
+        <tr class="link">
+            <td></td>
+            <td><a href="/admin/userInformation">个人信息</a></td>
+        </tr>
+        <tr class="link">
+            <td></td>
+            <td><a href="/admin/alterPassword">修改密码</a></td>
+        </tr>
+    </table>
+</div>
+<div id="content">
+    <table>
+        <colgroup style="width: 100px;" class="group1"></colgroup>
+        <colgroup class="group2"></colgroup>
+        <colgroup style="width: 50px;" class="group3"></colgroup>
+        <caption>个人信息管理</caption>
+        <tr>
+            <td>用户名</td>
+            <td id="adminID">1001</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>姓名</td>
+            <td id="name">张三</td>
+            <td><span id="alterName" class="alterBtn">修改</span></td>
+        </tr>
+        <tr>
+            <td>性别</td>
+            <td id="sex">男</td>
+            <td><span id="alterSex" class="alterBtn">修改</span></td>
+        </tr>
+        <tr>
+            <td>生日</td>
+            <td id="birth">2018-08-17</td>
+            <td><span id="alterBirth" class="alterBtn">修改</span></td>
+        </tr>
+        <tr>
+            <td>邮箱</td>
+            <td id="email">82871987@qq.com</td>
+            <td><span id="alterEmail" class="alterBtn">修改</span></td>
+        </tr>
+        <tr>
+            <td>手机</td>
+            <td id="phoneNumber">18875686859</td>
+            <td><span id="alterPhone" class="alterBtn">修改</span></td>
+        </tr>
+    </table>
+</div>
+<div id="alterNameDiv" class="alterInformationDiv">
+    <h4 class="alterTitle">修改姓名</h4>
+    <img class="closeImg" src="/images/close.png" alt="关闭">
+    <form>
+        <span class="title2">名字:</span>
+        <input type="text" value="张三" maxlength="20">
+        <span id="alterNameConfirm" class="confirm">确定</span>
+        <span class="cancel">取消</span>
+    </form>
+    <p class="tip">请输入0-16个字符</p>
+</div>
+<div id="alterSexDiv" class="alterInformationDiv">
+    <h4 class="alterTitle">修改性别</h4>
+    <span class="close"><img class="closeImg" src="/images/close.png" alt="关闭"></span>
+    <form>
+        <span class="title2">性别:</span>
+        <select name="sex" value="1">
+            <option value="0">保密</option>
+            <option value="1">男</option>
+            <option value="2">女</option>
+        </select>
+        <span id="alterSexConfirm" class="confirm">确定</span>
+        <span class="cancel">取消</span>
+    </form>
+</div>
+<div id="alterBirthDiv" class="alterInformationDiv">
+    <h4 class="alterTitle">修改生日</h4>
+    <span class="close"><img class="closeImg" src="/images/close.png" alt="关闭"></span>
+    <form>
+        <span class="title2">生日:</span>
+        <input type="date" value="2018-08-17">
+        <span id="alterBirthConfirm" class="confirm">确定</span>
+        <span class="cancel">取消</span>
+    </form>
+    <p class="tip">格式：YYYY-MM-DD或YYYY/MM/DD</p>
+</div>
+<div id="alterEmailDiv" class="alterInformationDiv">
+    <h4 class="alterTitle">修改邮箱地址</h4>
+    <span class="close"><img class="closeImg" src="/images/close.png" alt="关闭"></span>
+    <form>
+        <span class="title2">邮箱账号:</span>
+        <input type="email"  value="82871987@qq.com">
+        <span id="alterEmailConfirm" class="confirm">确定</span>
+        <span class="cancel">取消</span>
+    </form>
+</div>
+<div id="alterPhoneDiv" class="alterInformationDiv">
+    <h4 class="alterTitle">修改手机号码</h4>
+    <span class="close"><img class="closeImg" src="/images/close.png" alt="关闭"></span>
+    <form>
+        <span class="title2">手机:</span>
+        <input type="tel" value="18875686859" maxlength="11">
+        <span id="alterPhoneConfirm" class="confirm">确定</span>
+        <span class="cancel">取消</span>
+    </form>
+</div>
+</body>
+</html>

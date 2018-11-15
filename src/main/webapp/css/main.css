@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #f2f2f2;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    color: blue;
+}
+a:active{
+    color: orangered;
+}
+#head{
+    height: 140px;
+    min-width: 900px;
+    background-color: #f2f2f2;
+    position: relative;
+}
+#logo{
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    position: absolute;
+    top: 10px;
+    left: 100px;
+}
+#head>h1{
+    height: 60px;
+    line-height: 60px;
+    font-size: 40px;
+    font-family: 隶书;
+    position: absolute;
+    top: 10px;
+    left: 170px;
+}
+#userDiv{
+    width: 100%;
+    height: 40px;
+    position: absolute;
+    top: 90px;
+    background-color: white;
+}
+#userDiv>img{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    right: 150px;
+}
+#userDiv>a{
+    display: block;
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+    text-indent: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#side{
+    width: 180px;
+    position: absolute;
+    top: 160px;
+    left: 100px;
+}
+#content{
+    position: absolute;
+    top: 160px;
+    left: 330px;
+    background-color: #ffffff;
+}
+#side tr>td:first-child{
+    width:50px;
+}
+#side tr>td:last-child{
+    width: 130px;
+}
+#side td{
+    height: 40px;
+}
+#side img{
+    width: 30px;
+    height: 30px;
+}
+.title1 span,.title1 a{
+    font-size: 20px;
+}
+.link td{
+    height: 30px;
+}
